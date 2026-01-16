@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Your Cart</h1>
+</header>
+
+<ul id="cartItems" class="cart-list"></ul>
+<h3 id="total"></h3>
+
+<div class="center">
+  <button id="checkoutBtn">Checkout</button>
+</div>
+
+<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const list = document.getElementById("cartItems");
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.name} - ₹${item.price}`;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.textContent = "Remove";
+    removeBtn.onclick = () => {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload();
+    }
+
+    li.appendChild(removeBtn);
+    list.appendChild(li);
+
+    total += item.price;
+  });
+
+  document.getElementById("total").innerText = "Total Cost: ₹" + total;
+
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
+    if(cart.length === 0){
+      alert("Cart is empty!");
+      return;
+    }
+    alert("Thank you! Total: ₹" + cart.reduce((acc,item)=>acc+item.price,0));
+    cart = [];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.location.href = "products.html";
+  });
+});
+</script>
+</body>
+</html>
