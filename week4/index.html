@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task-4 Full Project Implementation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">ApexPlanet</div>
+    <nav>
+      <a href="#intro">Home</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#todo">To-Do App</a>
+      <a href="#products">Products</a>
+      <a href="#footer">Contact</a>
+    </nav>
+  </header>
+  <section id="intro" class="screen intro">
+    <h1 id="typed-text"></h1>
+    <h2>ApexPlanet Software Pvt Ltd</h2>
+    <button class="scroll-btn" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">
+      View Portfolio
+    </button>
+  </section>
+  <section id="portfolio" class="screen portfolio-section">
+    <h2>About Me</h2>
+    <p>I am a B.Tech student learning HTML, CSS, and JavaScript.</p>
+
+    <h2>Projects</h2>
+    <div class="project-grid" id="project-grid"></div>
+  </section>
+  <section id="todo" class="screen todo-section">
+    <h2>To-Do / Notes App</h2>
+    <input type="text" id="taskInput" placeholder="Enter your task">
+    <button id="addTaskBtn">Add Task</button>
+    <ul id="taskList"></ul>
+  </section>
+  <section id="products" class="screen product-section">
+    <h2>Products</h2>
+    <div class="product-controls">
+      <label>Filter by Category:</label>
+      <select id="categoryFilter">
+        <option value="all">All</option>
+        <option value="electronics">Electronics</option>
+        <option value="fashion">Fashion</option>
+        <option value="accessories">Accessories</option>
+      </select>
+      <label>Sort by Price:</label>
+      <select id="sortPrice">
+        <option value="">Select</option>
+        <option value="low">Low to High</option>
+        <option value="high">High to Low</option>
+      </select>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
+  <section id="contact" class="contact-section">
+  <div class="contact-box">
+    <h2>Contact Me</h2>22
+
+    <form onsubmit="showMessage(event)">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <textarea id="message" placeholder="Your Message" rows="4" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <!-- SUCCESS MESSAGE -->
+    <p id="successMsg">Message sent successfully!</p>
+  </div>
+</section>
+
+  <footer id="footer">
+    <p>Internship @ ApexPlanet Software Pvt Ltd</p>
+    <div>
+      <a href="#">LinkedIn</a> | <a href="#">GitHub</a> | <a href="#">Portfolio</a>
+    </div>
+  </footer>
+<script src="script.js"></script>
+</body>
+</html>

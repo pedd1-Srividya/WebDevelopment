@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend Development</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            background: linear-gradient(120deg,#f7f9f7,#e6e9e6);
+
+            /* PAGE GRID */
+            display:grid;
+            grid-template-rows:auto 1fr;
+        }
+
+        /* ---------- HEADER ---------- */
+        header{
+            position:relative;
+            background:url("https://picsum.photos/1200/400") no-repeat center/cover;
+            padding:120px 20px;
+            text-align:center;
+            color:#fff;
+        }
+
+        header::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:rgba(0,0,0,0.55);
+        }
+
+        header h1{
+            position:relative;
+            z-index:1;
+            font-size:3rem;
+            animation:fadeInDown 1s ease;
+        }
+
+        /* ---------- MAIN GRID ---------- */
+        main{
+            display:grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap:40px;
+            padding:60px 40px;
+            align-items:start;
+        }
+
+        /* ---------- CARD ---------- */
+        .card{
+            background:#fff;
+            padding:30px;
+            border-radius:16px;
+            box-shadow:0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .card h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        /* ---------- FORM ---------- */
+        form{
+            display:flex;
+            flex-direction:column;
+            gap:12px;
+        }
+
+        label{
+            font-weight:600;
+        }
+
+        input, textarea{
+            padding:14px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            font-size:1rem;
+        }
+
+        input:focus, textarea:focus{
+            outline:none;
+            border-color:#6a8caf;
+            box-shadow:0 0 0 3px rgba(106,140,175,0.2);
+        }
+
+        textarea{
+            resize:none;
+        }
+
+        button{
+            margin-top:15px;
+            padding:14px;
+            background:linear-gradient(135deg,#6a8caf,#88bdbc);
+            color:#fff;
+            border:none;
+            border-radius:10px;
+            font-size:1.1rem;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        button:hover{
+            opacity:0.9;
+        }
+
+        /* ---------- TODO LIST ---------- */
+        .todo-input{
+            display:grid;
+            grid-template-columns:1fr auto;
+            gap:10px;
+        }
+
+        ul{
+            list-style:none;
+            margin-top:20px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        li{
+            padding:12px;
+            background:#f1f1f1;
+            border-radius:8px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        li.completed{
+            text-decoration:line-through;
+            opacity:0.6;
+        }
+
+        .delete{
+            background:#e74c3c;
+            padding:6px 10px;
+            font-size:0.8rem;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+        @media(max-width:900px){
+            main{
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media(max-width:480px){
+            header h1{
+                font-size:1.8rem;
+            }
+
+            main{
+                padding:40px 20px;
+            }
+        }
+
+        /* ---------- ANIMATION ---------- */
+        @keyframes fadeInDown{
+            from{opacity:0; transform:translateY(-30px);}
+            to{opacity:1; transform:translateY(0);}
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Frontend Development</h1>
+</header>
+
+<main>
+
+    <!-- CONTACT FORM -->
+    <div class="card">
+        <h2>📩 Contact Form</h2>
+        <form id="contactForm">
+            <label>Name</label>
+            <input type="text" placeholder="Enter your name">
+
+            <label>Email</label>
+            <input type="email" placeholder="Enter your email">
+
+            <label>Message</label>
+            <textarea rows="4" placeholder="Enter your message"></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- TODO LIST -->
+    <div class="card">
+        <h2>📝 To-Do List</h2>
+
+        <div class="todo-input">
+            <input type="text" id="taskInput" placeholder="Enter a task">
+            <button onclick="addTask()">Add</button>
+        </div>
+
+        <ul id="taskList"></ul>
+    </div>
+
+</main>
+
+<script>
+    /* ---------- FORM VALIDATION ---------- */
+    const form = document.getElementById("contactForm");
+
+    form.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        const name = form.querySelector('input[type="text"]').value.trim();
+        const email = form.querySelector('input[type="email"]').value.trim();
+        const message = form.querySelector('textarea').value.trim();
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if(name === ""){
+            alert("Please enter your name");
+            return;
+        }
+        if(email === "" || !emailPattern.test(email)){
+            alert("Please enter a valid email");
+            return;
+        }
+        if(message === ""){
+            alert("Please enter your message");
+            return;
+        }
+
+        alert("Form submitted successfully!");
+        form.reset();
+    });
+
+    /* ---------- TODO LIST ---------- */
+    function addTask(){
+        const input = document.getElementById("taskInput");
+        const text = input.value.trim();
+
+        if(text === ""){
+            alert("Enter a task");
+            return;
+        }
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span onclick="toggleTask(this)">${text}</span>
+            <button class="delete" onclick="deleteTask(this)">Delete</button>
+        `;
+
+        document.getElementById("taskList").appendChild(li);
+        input.value = "";
+    }
+
+    function deleteTask(btn){
+        btn.parentElement.remove();
+    }
+
+    function toggleTask(task){
+        task.parentElement.classList.toggle("completed");
+    }
+</script>
+
+</body>
+</html>
